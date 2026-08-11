@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+streamlit
+langchain
+langchain-google-genai
+chromadb
+pypdf
+python-dotenv
+yfinance
+google.generativeai
