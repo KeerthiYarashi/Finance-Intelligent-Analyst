@@ -3,8 +3,11 @@ uvicorn
 streamlit
 langchain
 langchain-google-genai
-chromadb
+langchain-community
 pypdf
+chromadb
 python-dotenv
 yfinance
-google.generativeai
+
+fastembed
+onnxruntime-gpu

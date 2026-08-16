@@ -53,15 +53,15 @@ async def ask_route(req: AskRequest):
 def stats_route():
     try:
         from langchain_community.vectorstores import Chroma
-        from langchain_google_genai import GoogleGenerativeAIEmbeddings
-        embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-2")
+        from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+        embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
         db = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
         count = db._collection.count()
         return {
             "collection_name": db._collection.name,
             "total_chunks": count,
-            "embedding_model": "gemini-embedding-2",
-            "llm_model": "gemini-2.5-flash"
+            "embedding_model": "FastEmbed",
+            "llm_model": "gemini-3.7-flash"
         }
     except Exception as e:
         return {"error": "DB not initialized yet"}
