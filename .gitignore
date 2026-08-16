@@ -4,8 +4,6 @@ venv
 chroma_db
 **/chroma_db
 __pycache__
-*.pdf
-**/*.pdf
 *.md
 **/*.md
 pdf/
