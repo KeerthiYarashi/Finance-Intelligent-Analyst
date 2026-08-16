@@ -12,6 +12,12 @@ An enterprise-grade Retrieval-Augmented Generation (RAG) platform designed to au
 
 ---
 
+### 🔗 Project Links for Submission
+* **🎥 Video Presentation:** [Watch on YouTube](https://youtu.be/aGl8DzhlGwA?feature=shared)
+* **💻 GitHub Repository:** [KeerthiYarashi/Finance-Intelligent-Analyst](https://github.com/KeerthiYarashi/Finance-Intelligent-Analyst)
+
+---
+
 ## 🏢 Business Scenario & Data Source
 **Company Analyzed:** Microsoft Corporation (MSFT)
 **Data Source:** [Microsoft Investor Relations](https://www.microsoft.com/en-us/investor)
