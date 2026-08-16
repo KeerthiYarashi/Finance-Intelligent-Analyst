@@ -91,9 +91,11 @@ python -m streamlit run app.py
 
 ## 📸 Application Screenshots
 
-*(**INSTRUCTION FOR YOU**: Please take 1-2 screenshots of your working Streamlit application showing the index success message, the live market data, and an answer with sources. Replace the placeholders below with your images before submitting!)*
+![App Sidebar & Ingestion](assets/sidebar.png)
+*Sidebar displaying the successful PDF ingestion and dynamic database statistics (103 total chunks).*
 
-![App Screenshot 1](link-to-your-image.png)
+![Document QA Interface](assets/qa_interface.png)
+*The main query interface answering a comparative revenue question, complete with verified PDF source citations.*
 
 ---
 
