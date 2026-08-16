@@ -99,6 +99,8 @@ python -m streamlit run app.py
 
 ## 📐 Critical Architectural Decisions
 
+* **Embedding Model:** `FastEmbed` with the `BAAI/bge-small-en-v1.5` model.
+* **Rationale:** This is a highly efficient, top-ranking small embedding model. By running locally via ONNX, it guarantees privacy and completely eliminates API costs and latency associated with cloud embedding models like OpenAI's `text-embedding-3-small`.
 * **Chunk Size:** `1200` characters
 * **Chunk Overlap:** `200` characters
 * **Rationale:** Financial documents contain dense, tabular data. Standardizing on a larger 1200-character chunk ensures that entire financial tables, balance sheets, and their surrounding context remain perfectly intact inside a single mathematical vector. This vastly improves the LLM's ability to reason about comparative numbers.
@@ -113,7 +115,7 @@ While the GPT-4o model and ChromaDB pipeline work exceptionally well for narrati
 
 ## 🧪 Assignment Test Cases
 
-*(Note: The answers below were generated dynamically by the RAG engine based on the ingested Microsoft FY26 PDFs using Gemini 2.5 Flash and FlashRank).*
+*(Note: The answers below were generated dynamically by the RAG engine based on the ingested Microsoft FY26 PDFs using the `BAAI/bge-small-en-v1.5` embedding model, `FlashRank` for re-ranking, and Google `Gemini 2.5 Flash` for generation).*
 
 ### 1. What was total revenue in the most recent quarter you loaded?
 **Answer:** Based on the provided context, the most recent quarter is the fourth quarter ended June 30, 2026. Total revenue for this quarter was $90.0 billion (or $90,007 million as shown in the segment results). *(Sources: PressReleaseFY26Q4.pdf (Page 1), PressReleaseFY26Q1.pdf (Page 2), PressReleaseFY26Q2.pdf (Page 1), PressReleaseFY26Q4.pdf (Page 12))*
