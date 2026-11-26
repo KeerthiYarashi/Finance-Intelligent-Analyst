@@ -173,3 +173,27 @@ Information regarding growth by geography is not available in the uploaded docum
 ### 10. Deliberate Trap Question: "What is the CEO's personal shareholding in 2015?"
 **Answer:** The information is not available in the uploaded documents. *(Sources: PressReleaseFY26Q3.pdf Page 1, PressReleaseFY26Q4.pdf Page 10)*
 *(The system successfully executed an honest refusal to prevent hallucinations).*
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Follow these steps to get started:
+
+1. **Fork** this repository by clicking the **Fork** button at the top-right of the GitHub page.
+2. **Clone** your fork locally:
+   ```bash
+   git clone https://github.com/<your-username>/Finance-Intelligent-Analyst.git
+   cd Finance-Intelligent-Analyst
+   ```
+3. **Create a feature branch** and make your changes:
+   ```bash
+   git checkout -b feature/your-feature-name
+   git add .
+   git commit -m "Add a concise description of your change"
+   ```
+4. **Push** your branch and **open a Pull Request**:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+   Then go to the original repository on GitHub and click **New Pull Request** to submit your changes for review.
