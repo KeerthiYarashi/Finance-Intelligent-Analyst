@@ -3,7 +3,7 @@ import shutil
 from typing import List
 import yfinance as yf
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
 from ingest import ingest_pdfs
@@ -15,7 +15,7 @@ app = FastAPI(title="Finance RAG API")
 
 class AskRequest(BaseModel):
     question: str
-    top_k: int = 4
+    top_k: int = Field(default=4, ge=1, le=20)
 
 @app.post("/ingest")
 async def ingest_route(files: List[UploadFile] = File(...)):
@@ -25,12 +25,16 @@ async def ingest_route(files: List[UploadFile] = File(...)):
     
     file_paths = []
     for file in files:
-        if not file.filename.endswith(".pdf"):
+        filename = os.path.basename(file.filename or "")
+        if not filename.lower().endswith(".pdf"):
             raise HTTPException(status_code=400, detail="Only PDFs are allowed")
             
-        file_path = os.path.join(temp_dir, file.filename)
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        file_path = os.path.join(temp_dir, filename)
+        try:
+            with open(file_path, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+        finally:
+            await file.close()
         file_paths.append(file_path)
         
     try:
@@ -41,8 +45,11 @@ async def ingest_route(files: List[UploadFile] = File(...)):
 
 @app.post("/ask")
 async def ask_route(req: AskRequest):
+    question = req.question.strip()
+    if not question:
+        raise HTTPException(status_code=400, detail="Question must not be empty")
     try:
-        result = answer_question(req.question, req.top_k)
+        result = answer_question(question, req.top_k)
         return result
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -51,6 +58,8 @@ async def ask_route(req: AskRequest):
 
 @app.get("/stats")
 def stats_route():
+    if not os.path.exists("chroma_db"):
+        raise HTTPException(status_code=404, detail="DB not initialized yet")
     try:
         from langchain_community.vectorstores import Chroma
         from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
@@ -64,7 +73,7 @@ def stats_route():
             "llm_model": "gemini-3.7-flash"
         }
     except Exception as e:
-        return {"error": "DB not initialized yet"}
+        raise HTTPException(status_code=500, detail=f"Failed to read DB stats: {str(e)}")
 
 @app.get("/market/{ticker}")
 def market_route(ticker: str):
@@ -83,5 +92,7 @@ def market_route(ticker: str):
             "latest_price_usd": round(latest_price, 2),
             "market_cap": cap
         }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Market data error: {str(e)}")
